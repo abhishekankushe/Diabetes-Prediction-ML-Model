@@ -105,3 +105,22 @@ if file is not None:
 
     feature_cols = ["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]
     # Align columns; warn if missing
+    
+    
+    # keep only expected features; auto-drop extras like Outcome/ID/etc.
+    df_features = df.reindex(columns=feature_cols)
+    missing = [c for c in feature_cols if c not in df.columns]
+    if missing:
+        st.warning(f"Missing required columns in CSV: {', '.join(missing)}")
+
+    preds = pipe.predict(df_features)
+    probas = pipe.predict_proba(df_features)[:, 1]
+    out = df.copy()
+    out["Pred"] = preds
+    out["Prob_Diabetes"] = probas
+
+    st.dataframe(out.head(500))
+    csv = out.to_csv(index=False).encode()
+    st.download_button("Download predictions", csv, "predictions.csv", "text/csv")
+
+st.markdown('</div>', unsafe_allow_html=True)
