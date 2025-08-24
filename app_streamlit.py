@@ -105,6 +105,7 @@ if file is not None:
 
     feature_cols = ["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]
     # Align columns; warn if missing
+    
     df_features = df.reindex(columns=feature_cols)
     missing = [c for c in feature_cols if c not in df.columns]
     if missing:
@@ -123,3 +124,6 @@ if file is not None:
     except Exception as e:
         st.warning("Batch prediction failed. Check data types and columns.")
         st.exception(e)
+
+
+
