@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# ---------- MODEL UTILS ----------
+# ---------- MODEL UTILS ---------
 zero_as_missing_cols = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
 
 def zeros_to_nan(df: pd.DataFrame) -> pd.DataFrame:
@@ -106,24 +106,3 @@ if file is not None:
     feature_cols = ["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]
     # Align columns; warn if missing
     
-    df_features = df.reindex(columns=feature_cols)
-    missing = [c for c in feature_cols if c not in df.columns]
-    if missing:
-        st.warning(f"Missing required columns in CSV: {', '.join(missing)}")
-
-    try:
-        preds = pipe.predict(df_features)
-        probas = pipe.predict_proba(df_features)[:, 1]
-        out = df.copy()
-        out["Pred"] = preds
-        out["Prob_Diabetes"] = probas
-
-        st.dataframe(out.head(130))
-        csv = out.to_csv(index=False).encode()
-        st.download_button("Download predictions", csv, "predictions.csv", "text/csv")
-    except Exception as e:
-        st.warning("Batch prediction failed. Check data types and columns.")
-        st.exception(e)
-
-
-
