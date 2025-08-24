@@ -104,5 +104,3 @@ if file is not None:
     df = pd.read_csv(file)
 
     feature_cols = ["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]
-    # Align columns; warn if missing
-    
