@@ -22,7 +22,7 @@ def load_pipeline():
 pipe = load_pipeline()
 
 # ---------- UI ----------
-st.title("Diabetes Risk Prediction — Abhishek")
+st.subheader("Diabetes Risk Prediction — Abhishek")
 st.caption("Adjust inputs below. The prediction updates automatically on any change.")
 
 # Defaults
